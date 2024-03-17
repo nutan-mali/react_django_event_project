@@ -1,28 +1,28 @@
-
+# Import necessary modules and classes
 from .models import Event
 from .serializers import EventSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.generics import ListAPIView,RetrieveUpdateDestroyAPIView,CreateAPIView
-# from .permissions import IsOwnerOnly
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework import permissions
-# from rest_framework.permissions import AllowAny
 
-
-@api_view(['GET','POST'])
+# Define a view using the @api_view decorator to handle GET and POST requests
+@api_view(['GET', 'POST'])
 def event(request):
     if request.method == 'GET':
-        queryset  = Event.objects.all()
-        print(queryset )
-        serializer = EventSerializer(queryset , many=True)
+        # Fetch all Event objects from the database
+        queryset = Event.objects.all()
+        # Serialize the queryset using EventSerializer
+        serializer = EventSerializer(queryset, many=True)
+        # Return serialized data in the response
         return Response(serializer.data)
     elif request.method == 'POST':
+        # Deserialize request data using EventSerializer
         serializer = EventSerializer(data=request.data)
+        # Check if the data is valid
         if serializer.is_valid():
+            # Save the valid data to the database
             serializer.save()
-            # print(serializer )
-            return Response(serializer.data, status=201)  # Created
-        return Response(serializer.errors, status=400)  # Bad Request
+            # Return the serialized data in the response with status code 201 (Created)
+            return Response(serializer.data, status=201)
+        # Return errors if the data is invalid with status code 400 (Bad Request)
+        return Response(serializer.errors, status=400)
