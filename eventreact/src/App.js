@@ -22,13 +22,18 @@ function App() {
     <div className='App'>
       <h1>Event List</h1>
      {events.map(event => (
-        <div key={event.id}>
-          <h3>{event.event_name}</h3>
-          <p>Date: {event.date}</p>
-          <p>Time: {event.time}</p>
-          <p>Location: {event.location}</p> 
-          {/* Display other event details as needed */}
-        </div>
+        <div>
+        <h1>{event.event_name}</h1>
+        <p>Date: {event.date}</p>
+        <p>Time: {event.time}</p>
+        <p>Location: {event.location}</p>
+        <img src={event.image} alt="Event" />
+        {event.is_liked ? (
+          <img src="path_to_redHeart.svg" alt="Liked" className="heartIcon" />
+        ) : (
+          <img src="path_to_whiteHeart.svg" alt="Not Liked" className="heartIcon" />
+        )}
+      </div>
       ))} 
     </div>
   );
