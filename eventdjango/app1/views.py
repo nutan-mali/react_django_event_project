@@ -4,6 +4,7 @@ from .serializers import EventSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import ListAPIView,RetrieveUpdateDestroyAPIView,CreateAPIView
 # from .permissions import IsOwnerOnly
 # from rest_framework.permissions import IsAuthenticated
@@ -22,6 +23,6 @@ def event(request):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            print(queryset )
+            # print(serializer )
             return Response(serializer.data, status=201)  # Created
         return Response(serializer.errors, status=400)  # Bad Request

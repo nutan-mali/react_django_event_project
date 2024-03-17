@@ -20,7 +20,13 @@ function App() {
 
     getAllEvents();
   }, []);
+  const csrftoken = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
 
+  const axiosInstance = axios.create({
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
+  });
   const handleLikeClick = (event, eventId) => {
     event.preventDefault();
     const updatedEvents = events.map(evt =>
